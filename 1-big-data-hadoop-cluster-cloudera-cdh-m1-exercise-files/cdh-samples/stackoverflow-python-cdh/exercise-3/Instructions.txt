@@ -1,0 +1,12 @@
+Exercise 3: Starting Cloudera Manager in the QuickStart VM
+This exercise enables Cloudera Manager in the QuickStart VM.
+
+Steps:
+1. Double click on desktop icon 'Cloudera Express' or trial
+2. Wait for it to be enabled
+3. Optionally you can enable it from the command line, and this is specially required if you have less than 8 GiB of RAM as you will need to pass a -force parameter
+
+
+Now you have Cloudera Manager enabled.
+
+[Please see Module 2 Clip 5]

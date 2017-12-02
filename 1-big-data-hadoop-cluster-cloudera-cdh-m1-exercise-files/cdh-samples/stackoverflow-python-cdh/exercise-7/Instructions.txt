@@ -1,0 +1,24 @@
+Exercise 7: Deploying Big Data Cluster Using Cloudera CDH Automated Install (Path A)
+
+Prequisite: install wget which you can do by running 'yum install wget'
+
+Now to install CDH we need to download the latest installer and execute
+1.	wget https://archive.cloudera.com/cm5/installer/latest/cloudera-manager-installer.bin
+2.	chmod u+x cloudera-manager-installer.bin 
+3.	Run the Cloudera Manager Server installer:
+    - Install Cloudera Manager packages from the Internet - sudo ./cloudera-manager-installer.bin
+    - Install Cloudera Manager packages from a local repository - sudo ./cloudera-manager-installer.bin --skip_repo_package=1
+
+And follow the installation steps
+4. First there is the README which tells you what's going to happen, for example detect operating system host, install package repository, the Java runtime and finally Cloudera Manager server
+5. Then you need get the license, click Next and accept the license
+6. The the license for Java, click Next and accept 
+7. And then installation starts setting up repository
+8. Then Java is installed
+9. Followed by additional installation and configuration of Cloudera Manager Server
+10. Once installation is complete, you can browse the logs to understand the process that took place
+11. And finally, browse to http://localhost:7180 to log in with admin admin
+12. One additional step is to make sure that we have a correctly configured NAT Network, which is demonstrated in the video training
+
+And once we are done, we will have a freshly installed server Cloudera Manager that can be used to deploy your cluster
+

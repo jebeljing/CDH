@@ -1,0 +1,51 @@
+Exercise 6: Preparing Your Linux Machines for Your Cloudera Big Data Cluster 
+
+Linux Hostnames, Networking and More: At this point we have a base machine, which we will now clone and configure several times. First of all, we need to plan which names we are going to give them. In my case I will use the following names with corresponding IPs:
+    mgt01.cloudera  10.0.2.100
+    dn01.cloudera	10.0.2.101
+    dn02.cloudera	10.0.2.102
+    dn03.cloudera	10.0.2.103
+    dn04.cloudera	10.0.2.104
+
+Now let’s get started with creating a cluster. 
+1.	There are several settings that are shared among all machines in the cluster, so I will first clone one machine (and so we leave the base machine intact), make some shared configurations, then clone the other 4 machines and focus on their specific configuration. So please create a clone making sure that you have the “Reinitialize MAC address” checked
+
+2.	In the meantime, make sure you have a NAT Network configured and that it will be part of all machines are part of this cluster
+    a.	In Virtual Box go to File > Preferences
+    b.	And add new Nat Network, naming it ClusterPS
+    c.	Each machine should have it selected in the Network tab in Settings
+
+3.	Once cloning is ready, start the machine and log in using root cloudera
+
+4.	Disable selinux by setting SELINUX=disabled in the /etc/selinux/config
+
+5.	Run the “ip addr” command an you will see that the network interface does not yet have an IPV4, which is what we will work on right now. To get this working edit the corresponding configuration file using “vi /etc/sysconfig/network-scripts/ifcfg-enp0s3”
+    a.	Delete the IPV6 lines (tip, you can use dd), also remove the UUID to avoid conflicts
+    b.	BOOTPROTO=static
+    c.	ONBOOT=yes
+    d.	IPADDR=10.0.2.100
+    e.	NETMASK=255.255.255.0
+    f.	GATEWAY=10.0.2.1
+    g.	DNS1=8.8.8.8
+    h.	DNS2=8.8.4.4
+    i.	When done, restart the network service using “service network restart” and now you should have an ip address of .100, which you can check using “ip addr” 
+
+6.	Now it is time to configure internet access. You can confirm that at this point you do not have access because of lack of nameservers by doing a “ping www.cloudera.com” after which you will get a “unknown host” error message.
+    a.	Disable firewall (which some admins might frown upon)
+        i.	systemctl disable firewalld
+        ii.	systemctl stop firewalld
+Tip: A great tool to help you understand your configuration is netstat, which can be installed using “yum install net-tools”
+
+7.	Now it is time to create the entries in the hosts file for all machines with the names as above, so please do “vi /etc/hosts” and enter the following
+    10.0.2.100	mgt01.cloudera mgt01
+    10.0.2.101	dn01.cloudera dn01
+    10.0.2.102	dn02.cloudera dn02
+    10.0.2.103	dn03.cloudera dn03
+    10.0.2.104	dn04.cloudera dn04
+
+8.	Once done, shut down the machine and create a snapshot just in case. And now clone the machine 4 times, making sure you reinitialize the MAC address. Once each machine is cloned, start it and:
+    a.	Set host name to corresponding machine name using “nmtui”
+    b.	Set ip address using “vi /etc/sysconfig/network-scripts/ifcfg-enps03”
+    c.	Do in all machines, test all ips and shut down when done
+
+Now we are done and ready for Cloudera installation. Please shutdown all machines and create a snapshot on all of them to start with Cloudera installation. You can reuse this environment if you wish for testing other installation paths.

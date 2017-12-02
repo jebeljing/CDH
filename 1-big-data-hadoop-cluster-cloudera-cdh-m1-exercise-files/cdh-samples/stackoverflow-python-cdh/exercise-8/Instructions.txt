@@ -1,0 +1,23 @@
+Exercise 8: Deploying Big Data Cluster Using Cloudera CDH Automated Install (Path A)
+
+At this point we have a Linux cluster, a NAT Network and one server Cloudera Manager Server installed. It is time to deploy our cluster
+1. Login to Cloudera Manager in http://localhost:7180 using admin admin
+2. Please accept license terms and conditions
+3. Now it is time to select which type of Cloudera Manager you will be using, which depends on your needs - you will need a license or trial depending on what you prefer. In our case we will select Cloudera Express
+4. Next screen will cover what will be installed, please continue
+5. Specify which are the hosts where you will deploy the agents for the installation and please notice that there are multiple ways to specify by either IPs, range, host names or more
+6. Select repostiory options, which include whether you want to install using packages or parcels, the version to be installed and other additional parcels
+7. Now go over the JDK installation options, in our case we instruct for the JDK to be installed automatically
+8. Now specify if you want to use Single User Mode, which is a way of installing in certain secured environments where a single user will have the required permissions instead of multiple - we will not use Single User Mode
+9. Next it is time to specify how Cloudera Manager will connect to the nodes, either by providing via a user/password combination or SSH - we will use root but feel free to use whichever you prefer
+10. And very importantly, indicate how many simultaneous installations should take place - a large number of installations running in parallel can take too many resources so please throttle accordingly
+11. Now the agents will be deployed and installation will take place in parallel. Once a host is installed, those in queue will start the installation process. It continues until agents are deployed to the entire cluster. You may receive a failed to install message, and you have the option to retry 
+12. Once agents have been deployed, it is time to download, distribute and activate parcels
+13. With activated parcels, the next step is to validate the cluster by inspecting the hosts
+14. If all went well, then you get to pick what type of cluster you will have, namely what are the services that you want to deploy. In our case we will deploy Core Hadoop but feel free to deploy what you believe will work the best for you
+15. Next customize the Role Assignments, namely select which services will be installed in which nodes
+16. Moving on, it is time to configure the databases that will be used by our cluster's services. It is recommended to write down user and passwords if you intend at some point to migrate this cluster
+17. Now you can specify multiple cluster settings, i.e. block size, or leave defaults
+18. At this point deployment of all services will complete with a final configuration and deployment phase followed by the first run command, thus making all services active
+
+And you have a fully functional, Path A installed, Hadoop cluster installed using Cloudera CDH

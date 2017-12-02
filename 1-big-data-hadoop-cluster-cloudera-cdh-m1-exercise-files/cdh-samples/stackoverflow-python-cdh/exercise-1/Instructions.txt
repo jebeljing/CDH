@@ -1,0 +1,10 @@
+Exercise 1: Getting a Virtualization Environment Up & Running with VirtualBox 
+This exercise sets up a virtualization enviornment for you to run multiple virtual machines. Please bear in mind that based on the number of machines that you are running, you need to have enough resources to run them. For example with the QuickStart VM you need a recommended minimum of 8 GiB of RAM, although you can try with less but it will run slower and you will have to force install of Cloudera Express.
+
+Steps: 
+1. Download and install VirtualBox for your specific hardware from: https://www.virtualbox.org/wiki/Downloads
+2. Optionally set virtual directory in a different folder 
+
+Now you have a virtualization environment.
+
+[Please see Module 2 Clip 2]

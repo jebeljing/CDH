@@ -1,0 +1,23 @@
+Exercise 5: Installing Linux from Scratch with CentOS
+
+1.	Download the corresponding CentOS .iso
+2.	Create a new virtual machine in Virtual Box, call it “Base Linux Machine”, selecting Red Hat 64-bit 
+a.	We will clone this machine and use it for several different roles
+3.	Select RAM, in my case I will select 2GiB and at least 2 CPUs. This will change based on the role that you will use each machine for 
+4.	Create virtual hard disk now, dynamically allocated and with enough space
+a.	I use expert mode to select location of disk, use the default if it you do not need a specific location
+b.	I will select 80 GiB, but since it is dynamically allocated it does not consume that amount of space
+5.	Go to settings and in storage, insert the CentOS .iso 
+6.	Start the machine
+7.	Select “Install CentOS 7” and follow the installation steps
+a.	Select your language of choice and click continue
+b.	Select the installation destination, namely the disk you have just crated and click Done
+c.	Click on “Begin Installation”
+d.	And add a root password. I will set it to cloudera
+e.	Wait for the installation to be completed
+f.	When done, reboot and log in with root/cloudera
+g.	Check for version to make sure you have a supported CentOS version by using “cat /etc/centos-release”
+h.	Shutdown
+8.	And for good practice, take a snapshot by selecting Snapshots next to details in the Virtual Machine information area
+
+Great. We have our base machine ready!

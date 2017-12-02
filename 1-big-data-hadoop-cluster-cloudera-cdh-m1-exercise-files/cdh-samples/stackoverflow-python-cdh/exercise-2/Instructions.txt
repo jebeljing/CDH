@@ -1,0 +1,22 @@
+Exercise 2: Getting The Cloudera QuickStart VM Up & Running
+This exercise will get you a virtual machine with all you need to get started with Big Data and Hadoop using Cloudera CDH.
+
+Steps:
+1.	Download from http://www.cloudera.com/downloads/quickstart_vms/5-8.html (or replace with current or specific version)
+2.	Unzip into desired folder, i.e. \standalone-quickstart in the folder you designate as the base to use for this training's exercises
+3.	From Virtual Box’s menu, go go to “File” > “Import Appliance” and select the .ovf file, in this case cloudera-quickstart-vm-5.8.0-0-virtualbox.ovf 
+4.	Click next
+5.	And change settings, i.e. provide a friendly name
+    -	For Cloudera manager you need at least a recommended 8GiB (8192) of RAM and 2 CPUs so please change this value
+    -	If you don't or can't, you are going to need to pass -force as an option later to enable Cloudera Manager
+6.	Click on “Import” and wait for it to be ready - have some patience as it takes some time
+7.	Start the virtual machine using Normal Start
+8.  CentOS will start and you will be logged in automatically into the machine using the following credentials
+    - Username: cloudera
+    - Password: cloudera
+
+Now you have a Pseudo-Cluster with Cloudera CDH and all relevant services installed.
+
+Tip: Enable easy copy paste with instance by going to Devices > Shared Clipboard > Bidirectional
+
+[Please see Module 2 Clip 3]

@@ -1,0 +1,74 @@
+Exercise 4: Loading a StackExchange Site into HDFS
+
+In this exercise we will load the posts from one of the StackExchange sites into HDFS and run a few jobs to extract some data. 
+
+#1 Please run this command to install a prerequisite in all nodes in the cluster where you are running this exercise
+	sudo yum install -y python-pip
+
+#2 Prerequisite Instructions for Getting the Data to Use in This Exercise 
+The first step is to download the exercise zip file from this course as demonstrated in the video. Once you have it inside the machine that you will use to run the exercises, please make sure that it is in a folder called cdh-samples as that way it will be referenced in this exercise.
+
+For this course we will use as source the data from StackOverflow and related sites from StackExchange. Given that we have sites from a few megabytes in size to many gigabytes, you can select which dump you will like to use based on your available hardware. We will always use the Posts.xml from the dumps.
+
+StackOverflow dumps can be located in the following page
+	https://archive.org/download/stackexchange
+
+Please download the one that you would like to process, however please take into consideration that dump size varies greatly and thus you need to have enough resources in your cluster to process larger files. A small dump that can be used for analysis of data to test is:
+	https://archive.org/download/stackexchange/vi.stackexchange.com.7z
+
+A large dump can be the main programming site's dump, StackOverflow which can be found at:
+	https://archive.org/download/stackexchange/stackoverflow.com-Posts.7z
+
+To download in the Linux machine it is recommended to use wget and then p7zip for extraction which are not available by default. Instructions on how to download, expand and process file are demonstrated in the video tutorial, but you can also run these commands: 
+
+For getting the file for processing
+	wget https://archive.org/download/stackexchange/vi.stackexchange.com.7z
+
+For installing 7zip:
+	sudo yum install epel-release 
+	sudo yum install p7zip p7zip-plugins
+	
+For extracting the data files please run the following command (replacing with the name of the downloaded dump you selected)
+	7z e vi.stackexchange.com.7z
+
+The file we need is Posts.xml, please copy it to the /home/cloudera directory.
+
+#2 Instructions to Run the Exercise "Loading a StackExchange Site into HDFS and Asking a Few Questions"
+Please make sure you have ran already prerequisite #1 and have the data from #2
+
+Please open a terminal and run this command
+spark-submit --packages com.databricks:spark-xml_2.10:0.3.3 --master local[*] post-to-hdfs.py file:///home/cloudera/Posts.xml
+
+And copy the resulting file into the root of hdfs 
+	hdfs dfs -ls
+	hdfs dfs -ls results
+	hdfs dfs -cp results/part-00000
+
+
+Now open pyspark by running 'pyspark'
+
+Now please copy paste the functions in helper-functions.py and hit enter twice.
+	rdd = sc.pickleFile('ourresults')
+
+Now these are some of the possible Spark jobs that you can run
+# Count number of questions
+	questions = rdd.filter(lambda post: post[1] == 'Question')
+
+## Filter questions by tag
+	filteredByTag = questions.filter(lambda post: 'vimscript-python' in post[4])
+	print 'Tags for vimscript-python' + ": " + str(filteredByTag.count())
+
+## Import these libraries 
+	from datetime import datetime
+	from operator import add
+
+## Filter questions by year and bring the RDD contents back to the driver
+year = questions.map(lambda post: (getYear(post[7]), 1)).reduceByKey(add)
+for x in year.collect():
+	print x
+
+## Filter this year questions by month
+month = filteredByTag.filter(lambda post: getYear(post[7]) == 2016).map(lambda post: (getMonth(post[7]), 1)).reduceByKey(add)
+for m in month.collect():
+	print m
+	
